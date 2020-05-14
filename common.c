@@ -16,7 +16,7 @@ void ster_init(void) {
 }
 
 void keys_init(void) {
-	PORTB |= (KL1 | KL2 | KL3 | KL4);
+	PORTB |= KL1;
 }
 
 void change_and_measure_thermocouple(void) {
@@ -25,16 +25,11 @@ void change_and_measure_thermocouple(void) {
 	if(K1_PRESS) {
 		_delay_ms(30);
 		if(K1_PRESS) {
-			flag = 0;
+			flag++;
 		}
 	}
 
-	if(K2_PRESS) {
-		_delay_ms(30);
-		if(K2_PRESS) {
-			flag = 1;
-		}
-	}
+	if(flag > 3) flag = 0;
 
 	if(flag == 0) {
 		STER_PORT &= ~STER;
@@ -49,6 +44,18 @@ void change_and_measure_thermocouple(void) {
 		lcd_str("TERMOPARA TYPU K");
 		lcd_locate(1, 0);
 		lcd_int(measure(average(0)));
+	}
+	else if(flag == 2) {
+		lcd_locate(0, 0);
+		lcd_str(" CZUJNIK PT100  ");
+		lcd_locate(1, 0);
+		lcd_int(measure(average(2)));
+	}
+	else if(flag == 3) {
+		lcd_locate(0, 0);
+		lcd_str(" CZUJNIK PT100  ");
+		lcd_locate(1, 0);
+		lcd_int(measure(average(3)));
 	}
 }
 

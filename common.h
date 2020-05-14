@@ -17,16 +17,9 @@
 #define STER_PORT PORTB
 
 #define KL1 1<<PB2
-#define KL2 1<<PB3
-#define KL3 1<<PB4
-#define KL4 1<<PB5
 #define KEY_PIN PINB
 
 #define K1_PRESS (!(KEY_PIN & KL1))
-#define K2_PRESS (!(KEY_PIN & KL2))
-#define K3_PRESS (!(KEY_PIN & KL3))
-#define K4_PRESS (!(KEY_PIN & KL4))
-
 
 void ster_init(void);
 void keys_init(void);
