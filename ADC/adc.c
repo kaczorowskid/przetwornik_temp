@@ -36,14 +36,11 @@ uint16_t average(uint8_t mux){
 	return sr;
 }
 
-uint16_t thermocouple_measure(uint16_t average) {
+uint16_t pt_100_and_thermocouple_measure(uint16_t average) {
 	float temp = 0;
 	temp = (((average * 4.88) - 0.0027) / 10.0 );
 
 	return temp;
 }
 
-uint16_t pt100_measure(uint16_t average) {
-	float temp = 0;
 
-}

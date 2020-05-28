@@ -49,7 +49,7 @@ void change_and_measure_thermocouple(void) {
 		lcd_locate(0, 0);
 		lcd_str(" CZUJNIK PT100  ");
 		lcd_locate(1, 0);
-		lcd_int(measure(average(2)));
+		lcd_int(pt_100_and_thermocouple_measure(average(2)));
 	}
 	else if(flag == 3) {
 		lcd_locate(0, 0);
