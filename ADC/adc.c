@@ -43,4 +43,11 @@ uint16_t pt_100_and_thermocouple_measure(uint16_t average) {
 	return temp;
 }
 
+uint16_t ni_100_measure(uint16_t average) {
+	float temp = 0;
+
+
+	return temp;
+}
+
 
