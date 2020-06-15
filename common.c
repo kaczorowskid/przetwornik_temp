@@ -18,7 +18,7 @@ void keys_init(void) {
 	KEY_PORT |= KL1;
 }
 
-void change_and_measure_thermocouple(void) {
+void change_and_measure_thermosensors(void) {
 	static uint8_t flag = 0;
 
 	if(K1_PRESS) {
@@ -30,7 +30,9 @@ void change_and_measure_thermocouple(void) {
 
 	if(flag > 3) flag = 0;
 
-	if(flag == 0) {
+	switch(flag) {
+
+	case 0:
 		PK1_OFF;
 		PK2_OFF;
 		PK3_OFF;
@@ -38,8 +40,9 @@ void change_and_measure_thermocouple(void) {
 		lcd_str("TERMOPARA TYPU J");
 		lcd_locate(1, 0);
 		lcd_int(pt_100_and_thermocouple_measure(average(1)));
-	}
-	else if(flag == 1) {
+		break;
+
+	case 1:
 		PK1_OFF;
 		PK2_OFF;
 		PK3_ON;
@@ -47,8 +50,9 @@ void change_and_measure_thermocouple(void) {
 		lcd_str("TERMOPARA TYPU K");
 		lcd_locate(1, 0);
 		lcd_int(pt_100_and_thermocouple_measure(average(0)));
-	}
-	else if(flag == 2) {
+		break;
+
+	case 2:
 		PK1_OFF;
 		PK2_ON;
 		PK3_OFF;
@@ -56,8 +60,9 @@ void change_and_measure_thermocouple(void) {
 		lcd_str(" CZUJNIK NI100  ");
 		lcd_locate(1, 0);
 		lcd_int(ni_100_measure(average(3)));
-	}
-	else if(flag == 3) {
+		break;
+
+	case 3:
 		PK1_ON;
 		PK2_ON;
 		PK3_ON;
@@ -65,6 +70,7 @@ void change_and_measure_thermocouple(void) {
 		lcd_str(" CZUJNIK PT100  ");
 		lcd_locate(1, 0);
 		lcd_int(pt_100_and_thermocouple_measure(average(2)));
+		break;
 	}
 }
 

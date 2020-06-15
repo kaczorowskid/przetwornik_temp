@@ -38,6 +38,6 @@
 
 void ster_init(void);
 void keys_init(void);
-void change_and_measure_thermocouple(void);
+void change_and_measure_thermosensors(void);
 
 #endif /* COMMON_H_ */

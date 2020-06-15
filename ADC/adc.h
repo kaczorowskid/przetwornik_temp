@@ -13,6 +13,7 @@ void adc_init(void);
 uint16_t adc_measure(uint8_t mux);
 uint16_t average(uint8_t mux);
 uint16_t pt_100_and_thermocouple_measure(uint16_t average);
+uint16_t ni_100_measure(uint16_t average);
 
 static const float temp_data[] = {
 		100.0, 100.54, 101.09, 101.65, 102.20, 102.75, 103.31, 103.87, 104.43, 104.99, 105.55, 106.11, 106.67, 107.24, 107.80,

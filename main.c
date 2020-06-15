@@ -20,7 +20,7 @@ int main(void) {
 	lcd_cls();
 
 	while(1) {
-		change_and_measure_thermocouple();
+		change_and_measure_thermosensors();
 	}
 
 }
