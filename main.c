@@ -24,6 +24,7 @@ uint16_t temp;
 volatile uint16_t writeRegister[4];
 
 void modbusGet(void);
+void timer0_init(void);
 
 int main(void) {
 
@@ -31,6 +32,7 @@ int main(void) {
 	ster_init();
 	keys_init();
 	pwm_timer_init();
+	timer0_init();
 
 	lcd_init();
 	lcd_cls();
@@ -128,8 +130,12 @@ void modbusGet(void) {
 
 void timer0_init(void) {
 	TCCR0B |= (1<<WGM01);
-
+	TCCR0B |= (1<<CS00 | 1<<CS01);
+	TIMSK0 |= 1<<OCIE0A;
+	OCR0A = 11;
 }
 
-
+ISR(TIMER0_COMPA_vect) {
+	modbusGet();
+}
 
