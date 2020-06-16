@@ -7,6 +7,7 @@
 
 #include <avr/io.h>
 #include <util/delay.h>
+
 #include "common.h"
 
 void ster_init(void) {

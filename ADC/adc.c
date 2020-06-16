@@ -45,8 +45,8 @@ uint16_t pt_100_and_thermocouple_measure(uint16_t average) {
 
 uint16_t ni_100_measure(uint16_t average) {
 	float resistance = 0;
-	uint8_t array_len = sizeof(temp_data)/sizeof(temp_data[0]);
 	uint8_t temp = 0;
+	uint8_t array_len = sizeof(temp_data)/sizeof(temp_data[0]);
 
 	resistance = ((((average * 4.88) - 0.0027) / 10.0 ) * 100); //max 223.22
 
