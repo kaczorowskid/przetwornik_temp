@@ -51,7 +51,7 @@ uint16_t ni_100_measure(uint16_t average) {
 	resistance = ((((average * 4.88) - 0.0027) / 10.0 )); //max 223.22
 
 	for(uint8_t i = 0; i < array_len; i++) {
-		if(temp_data[i] == (float)resistance) temp = i;
+		if(temp_data[i] <= (float)resistance) temp = i;
 	}
 
 	return temp;

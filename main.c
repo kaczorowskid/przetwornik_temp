@@ -11,20 +11,13 @@
 #include "ADC/adc.h"
 #include "LCD/lcd44780.h"
 #include "PWM/pwm.h"
-#include "MODBUS/yaMBSiavr.h"
 
 #include "common.h"
-
-#define clientAddress 0x01
 
 
 uint8_t flag;
 uint16_t temp;
 
-volatile uint16_t writeRegister[4];
-
-void modbusGet(void);
-void timer0_init(void);
 
 int main(void) {
 
@@ -32,13 +25,9 @@ int main(void) {
 	ster_init();
 	keys_init();
 	pwm_timer_init();
-	timer0_init();
 
 	lcd_init();
 	lcd_cls();
-
-	modbusSetAddress(clientAddress);
-	modbusInit();
 
 	sei();
 
@@ -65,7 +54,6 @@ int main(void) {
 			lcd_str("TERMOPARA TYPU J");
 			lcd_locate(1, 0);
 			lcd_int(temp);
-			writeRegister[0] = temp;
 			OCR2A = change_pwm_to_voltage(500, temp);
 			break;
 
@@ -80,7 +68,6 @@ int main(void) {
 			lcd_str("TERMOPARA TYPU K");
 			lcd_locate(1, 0);
 			lcd_int(temp);
-			writeRegister[0] = temp;
 			OCR2A = change_pwm_to_voltage(500, temp);
 			break;
 
@@ -95,7 +82,6 @@ int main(void) {
 			lcd_str(" CZUJNIK NI100  ");
 			lcd_locate(1, 0);
 			lcd_int(temp);
-			writeRegister[0] = temp;
 			OCR2A = change_pwm_to_voltage(180, temp);
 			break;
 
@@ -110,32 +96,8 @@ int main(void) {
 			lcd_str(" CZUJNIK PT100  ");
 			lcd_locate(1, 0);
 			lcd_int(temp);
-			writeRegister[0] = temp;
 			OCR2A = change_pwm_to_voltage(500, temp);
 			break;
 		}
 	}
 }
-
-
-void modbusGet(void) {
-	if(modbusGetBusState() & (1<<ReceiveCompleted)){
-		switch(rxbuffer[1]) {
-		case fcPresetMultipleRegisters:
-			modbusExchangeRegisters(writeRegister, 0, 4);
-			break;
-		}
-	}
-}
-
-void timer0_init(void) {
-	TCCR0B |= (1<<WGM01);
-	TCCR0B |= (1<<CS00 | 1<<CS01);
-	TIMSK0 |= 1<<OCIE0A;
-	OCR0A = 11;
-}
-
-ISR(TIMER0_COMPA_vect) {
-	modbusGet();
-}
-
